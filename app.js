@@ -5,12 +5,13 @@ import db from "./src/database/database.js";
 import cartRouter from "./src/routes/cart.js";
 import menuRouter from "./src/routes/info.js";
 import customerRouter from "./src/routes/customer.js";
+import ordersRouter from "./src/routes/orders.js";
 const app = express();
 app.use(express.json());
 
 app.use("/cart", cartRouter);
 app.use("/info", menuRouter);
-app.use("/customer", customerRouter);
+app.use("/orders", ordersRouter);
 
 // db['cart'].find();
 // db['menu'].find();

@@ -1,1 +1,4 @@
+{"customerID":"111","date":"2024-05-30 18:50","products":"kaffe","quantity":4,"pricePerUnit":35,"_id":1111}
+{"customerID":"222","date":"2024-05-30 18:50","products":"kaffe","quantity":4,"pricePerUnit":35,"_id":2222}
+{"customerID":"123","date":"2024-05-30 18:50","products":[{"productID":"lN2tmDgmhBl1Mc6k","quantity":2,"pricePerUnit":42},{"productID":"QnMf8p1P9ZF9Oerm","quantity":2,"pricePerUnit":25}],"_id":"123"}
 {"customerID":"ehLEGwSC1FzobAHN","date":"2024-05-30 18:50","products":[{"productID":"lN2tmDgmhBl1Mc6k","quantity":2,"pricePerUnit":42},{"productID":"QnMf8p1P9ZF9Oerm","quantity":2,"pricePerUnit":25}],"_id":"e1qdba8XoBScEYio"}
