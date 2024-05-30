@@ -5,9 +5,10 @@ import db from "./src/database/database.js";
 const app = express();
 app.use(express.json());
 
-// db["menu"].insert({ Meny1: "Hejhej" });
-// db["categories"].insert({ Fika: "Bulle" });
-// db["history"].insert({ "Order 1": "hejhej" });
+// db['cart'].find();
+// db['menu'].find();
+// db['orders'].find();
+// db['users'].find();
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
