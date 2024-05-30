@@ -18,7 +18,22 @@ const customer = {
 // Cart
 const cart = {
   customerID: "ehLEGwSC1FzobAHN",
-  productID: "asdasgas",
+  products: [
+    {
+      title: "Espresso",
+      desc: "En stark och aromatisk enkel espresso.",
+      price: 25,
+      _id: "QnMf8p1P9ZF9Oerm",
+      quantiy: 2,
+    },
+    {
+      title: "Bryggkaffe",
+      desc: "Bryggd på månadens bönor.",
+      price: 39,
+      _id: "XxbJYtuWvSY6xPu0",
+      quantiy: 2,
+    },
+  ],
   quantity: 1,
   _id: "asfgaasjeytwqyerjr",
 };
@@ -32,4 +47,11 @@ const orders = {
     { productID: "QnMf8p1P9ZF9Oerm", quantity: 2, pricePerUnit: 25 },
   ],
   _id: "e1qdba8XoBScEYio",
+};
+
+// Company info
+const companyInfo = {
+  date_updated: "2024-05-30",
+  info: "lorem ipsum",
+  _id: "pznrZwy4rh4BM3N5",
 };
