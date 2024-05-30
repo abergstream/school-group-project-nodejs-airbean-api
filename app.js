@@ -11,6 +11,7 @@ app.use(express.json());
 
 app.use("/cart", cartRouter);
 app.use("/info", menuRouter);
+app.use("/customer", customerRouter);
 app.use("/orders", ordersRouter);
 
 // db['cart'].find();
