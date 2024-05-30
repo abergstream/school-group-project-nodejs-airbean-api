@@ -12,8 +12,14 @@ const ordersDB = new nedb({ filename: dbPath, autoload: true });
 }); */
 
 
-async function getOrderById(id) {
-  return await ordersDB.findOne({ customerID: id });
+async function getOrdersByCustomerId(customerId) {
+  try{
+   const orders = await ordersDB.find({ customerID: customerId });
+   return orders; 
+  }catch (error){
+    console.error("Error fetching orders", error);
+    throw error;
+  }
 }
 
-export { getOrderById };
+export { getOrdersByCustomerId };

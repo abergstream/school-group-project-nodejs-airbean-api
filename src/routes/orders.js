@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getOrderById } from "../controller/order.js";
-//import authenticate from 
+import { getOrdersByCustomerId } from "../controller/order.js";
+//import authenticate from... 
 
 const router = Router();
 
@@ -8,7 +8,7 @@ const router = Router();
 //router.get("/:id", authenticate, async (req, res) => {   authenticate för att kolla att sändaren är inloggad.
 router.get("/:id", async (req, res) => {
   try{
-    const order = await getOrderById(req.params.id);
+    const order = await getOrdersByCustomerId(req.params.id);
     if (order){
       res.json({order})
     }else {
