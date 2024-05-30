@@ -1,3 +1,1 @@
-{"customerID":"ehLEGwSC1FzobAHN","productID":"875194189984","quantity":1,"_id":"851896519854"}
-{"customerID":"ehLEGwSC1FzobAHN","productID":"SjwGh9EVaYWtIzs7","quantity":2,"_id":"FDFYSuX43RJ3HHNY"}
-{"customerID":"ehLEGwSC1FzobAHN","productID":"asdasgas","quantity":1,"_id":"asfgaasjeytwqyerjr"}
+{"customerID":"ehLEGwSC1FzobAHN","product":[{"title":"Macchiato","desc":"En macchiato med en skvätt mjölk.","price":30,"_id":"dy1JqGCeAYWaJqri","quantity":10}],"_id":"Acwd7ENmZXDGozIg"}
