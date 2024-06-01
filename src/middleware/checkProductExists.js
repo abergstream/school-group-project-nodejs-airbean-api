@@ -4,7 +4,14 @@ async function checkProductExists(req, res, next) {
   const productID = req.body.product;
   const customerID = req.body.customerID;
   const cartID = req.body.cartID;
-  console.log(productID);
+  const quantity = req.body.quantity;
+
+  if (quantity && quantity <= 0) {
+    return res
+      .status(400)
+      .json({ error: "Quantity can not be negative or zero" });
+  }
+
   try {
     const productQuery = await db.menu.findOne({ _id: productID });
 

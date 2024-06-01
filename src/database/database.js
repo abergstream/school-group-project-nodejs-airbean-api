@@ -9,11 +9,11 @@ const database_names = ["company", "cart", "customers", "menu", "orders"];
 const db = {};
 
 database_names.forEach((name) => {
-const filename = path.join(__dirname, `${name}.db`);
-db[name] = new nedb({
-filename: filename,
-autoload: true,
-});
+  const filename = path.join(__dirname, `${name}.db`);
+  db[name] = new nedb({
+    filename: filename,
+    autoload: true,
+  });
 });
 
 export default db;
