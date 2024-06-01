@@ -1,11 +1,18 @@
 import db from "../database/database.js";
 
 async function checkProductExists(req, res, next) {
-  const productID = req.body.product;
-  const customerID = req.body.customerID;
-  const cartID = req.body.cartID;
-  const quantity = req.body.quantity;
-
+  const { product, customerID, cartID, quantity } = req.body;
+  const queryDatabase = async (model, query, errorMessage) => {
+    try {
+      const result = await db[model].findOne(query);
+      if (!result) {
+        return res.status(404).json({ error: errorMessage });
+      }
+    } catch (error) {
+      console.error("Error querying the database:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  };
   if (quantity && quantity <= 0) {
     return res
       .status(400)
@@ -13,57 +20,40 @@ async function checkProductExists(req, res, next) {
   }
 
   try {
-    const productQuery = await db.menu.findOne({ _id: productID });
+    const productQuery = await db.menu.findOne({ _id: product });
 
     if (!productQuery) {
       return res
         .status(404)
         .json({ error: "Product not found in the database" });
     }
+
+    if (cartID && customerID) {
+      return await queryDatabase(
+        "cart",
+        { _id: cartID, customerID },
+        "Cart with customerID and cartID not found in database"
+      );
+    } else {
+      if (cartID) {
+        return await queryDatabase(
+          "cart",
+          { _id: cartID },
+          "Cart not found in database"
+        );
+      }
+      if (customerID) {
+        console.log(`customerID: ${customerID}`);
+        return await queryDatabase(
+          "customers",
+          { _id: customerID },
+          "Customer not found in database"
+        );
+      }
+    }
   } catch (error) {
     console.error("Error querying the database:", error);
     return res.status(500).json({ error: "Internal server error" });
-  }
-  if (cartID && customerID) {
-    try {
-      const cartQuery = await db.cart.findOne({
-        _id: cartID,
-        customerID: customerID,
-      });
-      if (!cartQuery) {
-        return res.status(404).json({
-          error: "Cart with customerID and cartID  not found in database",
-        });
-      }
-    } catch (error) {
-      console.error("Error querying the database:", error);
-      return res.status(500).json({ error: "Internal server error" });
-    }
-  } else {
-    if (cartID) {
-      try {
-        const cartQuery = await db.cart.findOne({ _id: cartID });
-        if (!cartQuery) {
-          return res.status(404).json({ error: "Cart not found in database" });
-        }
-      } catch (error) {
-        console.error("Error querying the database:", error);
-        return res.status(500).json({ error: "Internal server error" });
-      }
-    }
-    if (customerID) {
-      try {
-        const customerQuery = await db.customers.findOne({ _id: customerID });
-        if (!customerQuery) {
-          return res
-            .status(404)
-            .json({ error: "Customer not found in database" });
-        }
-      } catch (error) {
-        console.error("Error querying the database:", error);
-        return res.status(500).json({ error: "Internal server error" });
-      }
-    }
   }
   next();
 }
