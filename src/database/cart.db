@@ -1,1 +1,3 @@
 {"customerID":"ehLEGwSC1FzobAHN","product":[{"title":"Macchiato","desc":"En macchiato med en skvätt mjölk.","price":30,"_id":"dy1JqGCeAYWaJqri","quantity":10}],"_id":"Acwd7ENmZXDGozIg"}
+{"customerID":"","product":[{"title":"Latte","desc":"En len latte med perfekt balanserad mjölk och espresso.","price":49,"_id":"ZVjipnljyz05sa1O","quantity":1},{"title":"Cold Brew","desc":"Kallbryggt kaffe för en uppfriskande smakupplevelse.","price":42,"_id":"lN2tmDgmhBl1Mc6k","quantity":3}],"_id":"aGeeRjxZOLhozbnl"}
+{"customerID":"pYuw2gqZDsxwndfM","product":[{"title":"Cold Brew","desc":"Kallbryggt kaffe för en uppfriskande smakupplevelse.","price":42,"_id":"lN2tmDgmhBl1Mc6k","quantity":1}],"_id":"jB0P9TlgIbKp6rml"}
