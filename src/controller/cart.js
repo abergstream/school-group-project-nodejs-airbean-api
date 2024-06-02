@@ -15,55 +15,49 @@ const addToCart = async (req, res, next) => {
   if (cartID) {
     // Check if cartID is in database
     const cartQuery = await db["cart"].findOne({ _id: cartID });
-    if (cartQuery) {
-      // Check if product is already added
-      const productExists = cartQuery.product.some(
+    // Check if product is already added
+    const productExists = cartQuery.product.some(
+      (product) => product._id === productID
+    );
+    if (productExists) {
+      // Find index of the existing product
+      const productIndex = cartQuery.product.findIndex(
         (product) => product._id === productID
       );
-      if (productExists) {
-        // Find index of the existing product
-        const productIndex = cartQuery.product.findIndex(
-          (product) => product._id === productID
+
+      // Calculate new quantity
+      const newQuantity = quantity + cartQuery.product[productIndex].quantity;
+
+      // Update the document
+      try {
+        const updateResult = await db.cart.update(
+          { _id: cartID },
+          {
+            $set: {
+              [`product.${productIndex}.quantity`]: newQuantity,
+            },
+          },
+          { returnUpdatedDocs: true } // This option will return the updated document
+        );
+        return res.status(200).json(updateResult);
+      } catch {
+        return res.status(500).send({ message: "Could not update database" });
+      }
+    }
+    // Add new product
+    else {
+      // Add new product to the product array
+      try {
+        const result = await db.cart.update(
+          { _id: cartID },
+          { $push: { product: queryWithQuantity } },
+          { returnUpdatedDocs: true } // This option will return the updated document
         );
 
-        // Calculate new quantity
-        const newQuantity = quantity + cartQuery.product[productIndex].quantity;
-
-        // Update the document
-        try {
-          const updateResult = await db.cart.update(
-            { _id: cartID },
-            {
-              $set: {
-                [`product.${productIndex}.quantity`]: newQuantity,
-              },
-            },
-            { returnUpdatedDocs: true } // This option will return the updated document
-          );
-          return res.status(200).json(updateResult);
-        } catch {
-          return res.status(500).send({ message: "Could not update database" });
-        }
+        return res.status(200).json(result);
+      } catch {
+        return res.status(500).json({ message: "Error updating document" });
       }
-      // Add new product
-      else {
-        // Add new product to the product array
-        try {
-          const result = await db.cart.update(
-            { _id: cartID },
-            { $push: { product: queryWithQuantity } },
-            { returnUpdatedDocs: true } // This option will return the updated document
-          );
-
-          return res.status(200).json(result);
-        } catch {
-          return res.status(500).json({ message: "Error updating document" });
-        }
-      }
-    } else {
-      res
-        .status(404)
-        .json({ message: "Provided CartID was not found i database" });
     }
   } else {
     try {
