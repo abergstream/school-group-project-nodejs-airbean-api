@@ -39,7 +39,8 @@ const addToCart = async (req, res, next) => {
           },
           { returnUpdatedDocs: true } // This option will return the updated document
         );
-        return res.status(200).json(updateResult);
+        const productInfo = { ...coffeeQuery };
+        return res.status(200).json({ product: "Added", productInfo });
       } catch {
         return res.status(500).send({ message: "Could not update database" });
       }
@@ -53,8 +54,8 @@ const addToCart = async (req, res, next) => {
           { $push: { product: queryWithQuantity } },
           { returnUpdatedDocs: true } // This option will return the updated document
         );
-
-        return res.status(200).json(result);
+        const productInfo = { ...coffeeQuery };
+        return res.status(200).json({ product: "Added", productInfo });
       } catch {
         return res.status(500).json({ message: "Error updating document" });
       }
