@@ -55,3 +55,31 @@ const companyInfo = {
   info: "lorem ipsum",
   _id: "pznrZwy4rh4BM3N5",
 };
+
+const test = {
+  customerID: "ehLEGwSC1FzobAHN",
+  product: [
+    {
+      title: "Cappuccino",
+      desc: "En krämig cappuccino med skummad mjölk.",
+      price: 45,
+      _id: "nG7UZ7wTTM0wm64Q",
+      quantity: 7,
+    },
+    {
+      title: "Cold Brew",
+      desc: "Kallbryggt kaffe för en uppfriskande smakupplevelse.",
+      price: 42,
+      _id: "lN2tmDgmhBl1Mc6k",
+      quantity: 11,
+    },
+    {
+      title: "Macchiato",
+      desc: "En macchiato med en skvätt mjölk.",
+      price: 30,
+      _id: "dy1JqGCeAYWaJqri",
+      quantity: 4,
+    },
+  ],
+  _id: "1Uqqy7wyKZmILjd9",
+};
