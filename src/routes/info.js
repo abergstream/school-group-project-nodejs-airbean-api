@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {getCompanyInfo} from "../controller/info.js"
+import  getCompanyInfo from "../controller/info.js"
 
 const router = Router();
 
@@ -9,9 +9,9 @@ router.get("/menu", (req, res) => {
 });
 
 // localhost:8000/company
-router.get("/company", async (req, res) => {
+router.get("/", async (req, res) => {
   const info = await getCompanyInfo()
-  res.json({info : info})
+  res.json({info: info[0].info})
 });
 
 export default router;
