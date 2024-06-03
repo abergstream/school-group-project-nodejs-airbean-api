@@ -1,17 +1,20 @@
 import { Router } from "express";
+
 import  getCompanyInfo from "../controller/info.js"
+
+import { getAllProducts } from "../controller/menu.js";
+
 
 const router = Router();
 
-// localhost:8000/menu
-router.get("/menu", (req, res) => {
-  res.send("View menu");
-});
+router.get("/menu", getAllProducts)
+
 
 // localhost:8000/company
 router.get("/", async (req, res) => {
   const info = await getCompanyInfo()
   res.json({info: info[0].info})
+
 });
 
 export default router;

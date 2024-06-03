@@ -1,6 +1,6 @@
 import db from "../database/database.js";
 
-async function checkProductExists(req, res, next) {
+const checkProductExists = async (req, res, next) => {
   const { product, customerID, cartID, quantity } = req.body;
 
   if (quantity && quantity <= 0) {
