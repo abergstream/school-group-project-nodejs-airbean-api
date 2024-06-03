@@ -4,7 +4,7 @@ import customerRouter from "./src/routes/customer.js";
 import loggerMiddleware from "./src/middleware/logger.js";
 import errorHandlerMiddleware from "./src/middleware/errorHandler.js";
 import ordersRouter from "./src/routes/orders.js";
-import companyRouter from "./src/routes/info.js"
+import companyRouter from "./src/routes/info.js";
 
 import loginRouter from "./src/middleware/auth.js";
 import confirmationRouter from "./src/routes/confirmation.js";
@@ -12,8 +12,7 @@ import confirmationRouter from "./src/routes/confirmation.js";
 const PORT = 8000;
 
 const app = express();
-global.currentUser = '';
-
+global.currentUser = "";
 
 app.use(express.json());
 app.use(loggerMiddleware);
@@ -22,7 +21,6 @@ app.use("/cart", cartRouter);
 app.use("/info", companyRouter);
 app.use("/customer", customerRouter);
 app.use("/orders", ordersRouter);
-app.use("/company", companyRouter);
 
 app.use("/confirmation", confirmationRouter);
 app.use("/auth", loginRouter);
