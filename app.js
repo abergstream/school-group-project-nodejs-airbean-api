@@ -11,6 +11,8 @@ const PORT = process.env.PORT;
 // const API_KEY = process.env.API_KEY;
 
 import ordersRouter from "./src/routes/orders.js";
+import confirmationRouter from "./src/routes/confirmation.js";
+
 const app = express();
 
 app.use(express.json());
@@ -21,6 +23,7 @@ app.use("/cart", cartRouter);
 app.use("/info", menuRouter);
 app.use("/customer", customerRouter);
 app.use("/orders", ordersRouter);
+app.use("/confirmation", confirmationRouter);
 
 app.get('/error', (req, res, next) => {
   const error = new Error('Page not found');
