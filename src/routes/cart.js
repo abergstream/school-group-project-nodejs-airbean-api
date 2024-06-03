@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { showCart } from "../controller/cart.js";
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("View cart");
-});
+
+router.get("/cart", showCart) 
+
 router.post("/", (req, res) => {
   res.send("Add product to cart");
 });
