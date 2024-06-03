@@ -1,16 +1,30 @@
 import crypto from 'crypto';
-import database from '../database/database.js'; 
+import database from '../database/database.js';
 
 // Hash function for password
 const hashPassword = (password) => {
-  return crypto.createHash('sha256').update(password).digest('hex');
+    return crypto.createHash('sha256').update(password).digest('hex');
 };
 
 // Register a new user
-export const register = async (req, res) => {
+const register = async (req, res) => {
     const { username, email, password, phone } = req.body;
     try {
-        // Add the user to the database
+        // Check if the email already exists
+        const existingEmail = await database.customers.findOne({ email });
+        if (existingEmail) {
+            console.log("Email already in use:", email);
+            return res.status(400).json({ error: "Email already in use" });
+        }
+
+        // Check if the username already exists
+        const existingUsername = await database.customers.findOne({ username });
+        if (existingUsername) {
+            console.log("Username already in use:", username);
+            return res.status(400).json({ error: "Username already in use" });
+        }
+
+        // Add the new user to the database
         const newUser = await database.customers.insert({ username, email, password: hashPassword(password), phone });
         console.log("New user registered:", newUser); // Log the new user
         res.status(201).json({ message: "User registered successfully", user: newUser });
@@ -21,7 +35,7 @@ export const register = async (req, res) => {
 };
 
 // Log in a user
-export const login = async (req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body;
     try {
         // Retrieve the user from the database based on email address
@@ -44,7 +58,9 @@ export const login = async (req, res) => {
 };
 
 // Middleware for authentication (if needed)
-export const auth = (req, res, next) => {
-  // Implement authentication logic here if needed
-  next();
+const auth = (req, res, next) => {
+    // Implement authentication logic here if needed
+    next();
 };
+
+export { register, login }
