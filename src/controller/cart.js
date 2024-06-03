@@ -228,20 +228,20 @@ const deleteItemInOrder = async (cartID, productID) => {
   try {
     const cartItem = await db["cart"].findOne({ _id: cartID });
 
-    if(!cartItem) {
-      throw new Error ('Cart not found')
+    if (!cartItem) {
+      throw new Error('Cart not found')
     }
 
     const productExists = cartItem.product.some(p => p._id === productID)
 
     if (!productExists) {
-        throw new Error("Product not found in cart")
+      throw new Error("Product not found in cart")
     }
 
     const updateProducts = cartItem.product.filter(p => p._id !== productID)
 
     console.log("updateProducts", updateProducts)
-    
+
 
     const numUpdated = await db["cart"].update(
       { _id: cartID },
@@ -249,7 +249,7 @@ const deleteItemInOrder = async (cartID, productID) => {
       {}
     );
 
-  }catch(error){
+  } catch (error) {
     console.error("Error removing specific item from cart", error)
     throw error
   }
