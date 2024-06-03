@@ -1,26 +1,26 @@
 import { Router } from "express";
 
-import { showCart } from "../controller/cart.js";
+import { addToCart, deleteOrder, deleteItemInOrder, placeOrder, showCart } from "../controller/cart.js";
+import checkProductExists from "../middleware/checkProductExists.js";
 const router = Router();
 
 
 router.get("/cart", showCart) 
 
-import { addToCart, deleteOrder, deleteItemInOrder } from "../controller/cart.js";
-import checkProductExists from "../middleware/checkProductExists.js";
 
 router.get("/", (req, res) => {
   res.send("View cart");
 });
+
 router.post("/", checkProductExists, (req, res, next) => {
   addToCart(req, res, next);
   // res.send("Den finns");
+});
 
+router.post("/order", (req, res, next) => {
+  placeOrder(req, res, next)
 });
-router.post("/order", (req, res) => {
-  res.send("Place order");
-  // placeOrder();
-});
+
 
 //Delete order
 router.delete("/", async (req, res) => {
