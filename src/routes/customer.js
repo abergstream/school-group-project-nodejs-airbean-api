@@ -8,7 +8,25 @@ const router = express.Router();
 router.post("/register", register);
 
 // Endpoint for user login
-router.post("/login", login);
+
+router.post('/login', (req, res) => {  
+    const { username } = req.body;
+    
+    if (username) {  // Kontrollera att användarnamn är angivet
+      global.currentUser = { username };  // Sätt global currentUser med användarnamn
+      res.status(200).json({
+        success: true,
+        message: 'Login successful',
+        user: global.currentUser
+      });
+    } else {
+      res.status(401).json({
+        success: false,
+        message: 'Username is required'
+      });
+    }
+  });
+
 
 // GET endpoint to fetch all customers
 router.get("/", async (req, res) => {

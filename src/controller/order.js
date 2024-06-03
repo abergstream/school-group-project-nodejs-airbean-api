@@ -1,6 +1,6 @@
 import db from '../database/database.js';
 
-/* ordersDB.insert({ customerID: '111', date: "2024-05-30 18:50", products:"kaffe", quantity:4, pricePerUnit:35, _id:5555 
+ /* db.orders.insert({ customerID: '111', date: "2024-05-30 18:50", products:"kaffe", quantity:4, pricePerUnit:35, _id:11111 
 }); */
 
 //Search for all orders in orders database made by customer with selected customerId.
