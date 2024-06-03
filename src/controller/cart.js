@@ -1,4 +1,6 @@
-import db from "../database/database.js";
+
+import db from '../database/database.js'; 
+
 
 // Function for cart
 const addToCart = async (req, res, next) => {
@@ -79,6 +81,23 @@ function placeOrder() {
   // Skicka med cartID
 }
 
+
+
+  // Show cart
+const showCart = async (req, res) => {
+  try {
+    const allCartProducts = await db.cart.find({});
+    res.send(allCartProducts);
+  } catch (error) {
+    res.status(500).send({ error: 'Could not get find the cart... no coffee for you!' });
+  }
+};
+
+  export { showCart };
+  
+
+
+  
 function showCart() {
   // Visa kundkorg
 }
@@ -146,3 +165,4 @@ const deleteItemInOrder = async (cartID, productID) => {
 }
 
 export { addToCart, deleteOrder, deleteItemInOrder };
+
