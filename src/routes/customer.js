@@ -9,7 +9,7 @@ router.post("/register", register);
 
 // Endpoint for user login
 
-router.post('/login', (req, res) => {  // Korrekt sökväg och metod
+router.post('/login', (req, res) => {  
     const { username } = req.body;
     
     if (username) {  // Kontrollera att användarnamn är angivet
