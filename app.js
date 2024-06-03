@@ -1,19 +1,18 @@
 import express from "express";
 import cartRouter from "./src/routes/cart.js";
 import customerRouter from "./src/routes/customer.js";
-import loggerMiddleware from "./src/middleware/logger.js";
-import errorHandlerMiddleware from "./src/middleware/errorHandler.js";
 import ordersRouter from "./src/routes/orders.js";
 import companyRouter from "./src/routes/info.js"
-
 import loginRouter from "./src/middleware/auth.js";
 import confirmationRouter from "./src/routes/confirmation.js";
+import loggerMiddleware from "./src/middleware/logger.js";
+import errorHandlerMiddleware from "./src/middleware/errorHandler.js";
+import notFoundMiddleware from "./src/middleware/notFound.js";
 
 const PORT = 8000;
 
 const app = express();
 global.currentUser = '';
-
 
 app.use(express.json());
 app.use(loggerMiddleware);
@@ -27,12 +26,7 @@ app.use("/company", companyRouter);
 app.use("/confirmation", confirmationRouter);
 app.use("/auth", loginRouter);
 
-app.get("/error", (req, res, next) => {
-  const error = new Error("Page not found");
-  error.status = 404;
-  next(error);
-});
-
+app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 // db['cart'].find();
