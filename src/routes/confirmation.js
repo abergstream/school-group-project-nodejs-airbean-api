@@ -8,15 +8,15 @@ const router = Router();
 
 //Sök order genom att ange order-id:
 router.get("/:id", async (req, res) => {
-  try{
+  try {
     const order = await getOrderByOrderId(req.params.id);
-    if (order){
+    if (order) {
       //Beräkna tid för leverans (20 min)
       const orderDate = new Date(order.date);
       const deliveryDate = new Date(orderDate.getTime() + 20 * 60000);   //Räkna om till millisekunder
       // Gör formatet till HH:MM
       const deliveryTime = deliveryDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      
+
       // Returnera order med leveranstid
       res.json({ ...order, deliveryTime });
     } else {

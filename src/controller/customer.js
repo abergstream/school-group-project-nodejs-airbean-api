@@ -1,13 +1,13 @@
 import crypto from 'crypto';
-import database from '../database/database.js'; 
+import database from '../database/database.js';
 
 // Hash function for password
 const hashPassword = (password) => {
-  return crypto.createHash('sha256').update(password).digest('hex');
+    return crypto.createHash('sha256').update(password).digest('hex');
 };
 
 // Register a new user
-export const register = async (req, res) => {
+const register = async (req, res) => {
     const { username, email, password, phone } = req.body;
     try {
         // Add the user to the database
@@ -21,7 +21,7 @@ export const register = async (req, res) => {
 };
 
 // Log in a user
-export const login = async (req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body;
     try {
         // Retrieve the user from the database based on email address
@@ -44,7 +44,9 @@ export const login = async (req, res) => {
 };
 
 // Middleware for authentication (if needed)
-export const auth = (req, res, next) => {
-  // Implement authentication logic here if needed
-  next();
+const auth = (req, res, next) => {
+    // Implement authentication logic here if needed
+    next();
 };
+
+export { register, login }

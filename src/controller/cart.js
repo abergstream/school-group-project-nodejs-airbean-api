@@ -75,6 +75,7 @@ const addToCart = async (req, res, next) => {
     }
   }
 };
+
 // Show cart
 const showCart = async (req, res) => {
   try {
@@ -87,6 +88,7 @@ const showCart = async (req, res) => {
   }
 };
 
+// Place order
 const placeOrder = async (req, res, next) => {
   // Vet inte om jag behöver cartID
   const { customerID, cartID, guestInfo } = req.body;
@@ -146,6 +148,7 @@ const placeOrder = async (req, res, next) => {
   next();
 };
 
+// Format date
 const formatDate = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -161,7 +164,7 @@ const formatDate = (date) => {
 //Insomnina URL: localhost:8000/cart
 //BODY:
 /* {
-	"_id":"1STi9KugGouyFUr5"          Välj rätt id från cart
+  "_id":"1STi9KugGouyFUr5"          Välj rätt id från cart
 } */
 
 const deleteOrder = async (cartID) => {
@@ -187,7 +190,7 @@ const deleteOrder = async (cartID) => {
 //Insomnina URL: localhost:8000/cart/item
 //BODY:
 /* {
-	"cartID": "5J0W9gjuFH9oWvCZ",          Välj rätt id från cart
+  "cartID": "5J0W9gjuFH9oWvCZ",          Välj rätt id från cart
   "productID" : "lN2tmDgmhBl1Mc6k"       Välj rätt id från cart
 } */
 
