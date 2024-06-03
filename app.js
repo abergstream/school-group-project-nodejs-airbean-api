@@ -8,13 +8,13 @@ import errorHandlerMiddleware from "./src/middleware/errorHandler.js";
 import ordersRouter from "./src/routes/orders.js";
 import confirmationRouter from "./src/routes/confirmation.js";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 // const API_KEY = process.env.API_KEY;
 
 const app = express();
 
 app.use(express.json());
-app.use(loggerMiddleware)
+app.use(loggerMiddleware);
 
 app.use("/cart", cartRouter);
 app.use("/info", menuRouter);
@@ -22,13 +22,13 @@ app.use("/customer", customerRouter);
 app.use("/orders", ordersRouter);
 app.use("/confirmation", confirmationRouter);
 
-app.get('/error', (req, res, next) => {
-  const error = new Error('Page not found');
+app.get("/error", (req, res, next) => {
+  const error = new Error("Page not found");
   error.status = 404;
   next(error);
 });
 
-app.use(errorHandlerMiddleware)
+app.use(errorHandlerMiddleware);
 
 // db['cart'].find();
 // db['menu'].find();
