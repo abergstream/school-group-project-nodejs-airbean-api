@@ -78,9 +78,20 @@ const addToCart = async (req, res, next) => {
 
 // Show cart
 const showCart = async (req, res) => {
+  const cartID = req.params.id;
   try {
-    const allCartProducts = await db.cart.find({});
-    res.send(allCartProducts);
+    const cart = await db.cart.find({ _id: cartID });
+    let price = 0;
+    if (cart.length === 0) {
+      return res
+        .status(404)
+        .json({ message: `Cart: ${cartID} could not be found` });
+    }
+    cart[0].product.forEach((product) => {
+      price = price + product.quantity * product.price;
+    });
+    const response = { ...cart[0], price };
+    res.send(response);
   } catch (error) {
     res.status(500).send({ error: 'Could not get find the cart... no coffee for you!' });
   }
