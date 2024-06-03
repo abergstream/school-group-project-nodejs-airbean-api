@@ -88,54 +88,66 @@ const showCart = async (req, res) => {
 
 // Place order
 const placeOrder = async (req, res, next) => {
-  // Vet inte om jag behöver cartID
   const { customerID, cartID, guestInfo } = req.body
   const orderTime = formatDate(new Date())
 
   let orderCustomerID = customerID
 
   try {
-    if (!orderCustomerID && guestInfo) {
-      const { email, phone } = guestInfo
-      if (!email || !phone) {
-        return res.status(400).json({ message: "Guest email and phone are required" })
+    if (cartID) {
+      const cart = await db["cart"].findOne({ _id: cartID })
+
+      if (cart) {
+        const allCartProducts = cart.product
+
+        if (!orderCustomerID && guestInfo) {
+          const { email, phone } = guestInfo
+          if (!email || !phone) {
+            return res.status(400).json({ message: "Guest email and phone are required" })
+          }
+
+          // Create a guest entry if not logged in
+          const guestCustomer = await db["customers"].insert({
+            username: "guest",
+            email: guestInfo.email,
+            phone: guestInfo.phone,
+          })
+          orderCustomerID = guestCustomer._id
+        }
+
+        if (orderCustomerID && !guestInfo) {
+          const customer = await db["customers"].findOne({ _id: orderCustomerID })
+          if (!customer) {
+            return res.status(400).json({ message: "Customer not found" })
+          }
+        }
+
+        // Check if customerID or guestInfo is provided
+        if (!orderCustomerID) {
+          return res.status(400).json({ message: "customerID or valid GuestInfo is required" })
+        }
+
+        // Calculate estimated delivery time
+        const estimatedDelivery = formatDate(new Date(Date.now() + 20 * 60 * 1000))
+
+        const newOrder = {
+          customerID: orderCustomerID,
+          cartID: cartID,
+          cartProducts: allCartProducts,
+          date: orderTime,
+          estimatedDelivery: estimatedDelivery
+        }
+
+        const savedOrder = await db["orders"].insert(newOrder)
+        deleteOrder(cartID)
+
+        res.json({ message: "Order placed successfully", order: savedOrder })
+      } else {
+        res.status(400).json({ message: "CartID is invalid" })
       }
-
-      // Create a guest entry if not logged in
-      const guestCustomer = await db["customers"].insert({
-        username: "guest",
-        email: guestInfo.email,
-        phone: guestInfo.phone,
-      })
-      orderCustomerID = guestCustomer._id
+    } else {
+      res.status(400).json({ message: "CartID is required" })
     }
-
-    if (orderCustomerID && !guestInfo) {
-      const customer = await db["customers"].findOne({ _id: orderCustomerID })
-      if (!customer) {
-        return res.status(400).json({ message: "Customer not found" })
-      }
-    }
-
-    // Check if customerID or guestInfo is provided
-    if (!orderCustomerID) {
-      return res.status(400).json({ message: "customerID or valid GuestInfo is required" })
-    }
-
-    // Calculate estimated delivery time
-    const estimatedDelivery = formatDate(new Date(Date.now() + 20 * 60 * 1000))
-
-    const newOrder = {
-      customerID: orderCustomerID,
-      cartID: cartID,
-      date: orderTime,
-      estimatedDelivery: estimatedDelivery
-    }
-
-    const savedOrder = await db["orders"].insert(newOrder)
-
-    res.json({ message: "Order placed successfully", order: savedOrder })
-
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -179,7 +191,6 @@ const deleteOrder = async (cartID) => {
     console.error('Error removing item from cart', error)
     throw error
   }
-
 }
 
 //Delete specific item in order

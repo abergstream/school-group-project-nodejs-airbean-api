@@ -1,5 +1,4 @@
 import express from "express";
-import db from "./src/database/database.js";
 import cartRouter from "./src/routes/cart.js";
 import menuRouter from "./src/routes/info.js";
 import customerRouter from "./src/routes/customer.js";
@@ -8,8 +7,7 @@ import errorHandlerMiddleware from "./src/middleware/errorHandler.js";
 import ordersRouter from "./src/routes/orders.js";
 import confirmationRouter from "./src/routes/confirmation.js";
 
-const PORT = process.env.PORT || 3000;
-// const API_KEY = process.env.API_KEY;
+const PORT = process.env.PORT || 8000;
 
 const app = express();
 

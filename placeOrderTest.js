@@ -5,13 +5,13 @@ http://localhost:{PORT}/cart/order
 
 const registeredCustomer = {
   customerID: "DzbWOAIZTDQUyoQB",
-  cartID: "sampleCartID",
+  cartID: "Acwd7ENmZXDGozIg",
   guestInfo: null
 }
 
 const guestCustomer = {
   customerID: null,
-  cartID: "sampleCartID",
+  cartID: "Acwd7ENmZXDGozIg",
   guestInfo: {
     email: "guest@example.com",
     phone: "1234567890"
@@ -20,7 +20,7 @@ const guestCustomer = {
 
 const invalidGuestOrder = {
   customerID: null,
-  cartID: "sampleCartID",
+  cartID: "Acwd7ENmZXDGozIg",
   guestInfo: {
     email: "guest@example.com"
     // Missing phone number
