@@ -62,9 +62,6 @@ const login = async (req, res) => {
     console.error("Error logging in user:", error);
     res.status(500).json({ error: "Failed to login user" });
   }
-  console.log("User logged in successfully:", user.email);
-  global.currentUser = { email };
-  res.status(200).json({ message: "Login successful", user });
 };
 
 // Middleware for authentication (if needed)
