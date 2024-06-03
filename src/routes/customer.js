@@ -5,34 +5,33 @@ import path from 'path';
 
 const router = express.Router();
 
-// Ange sökvägen till databasfilen relativt till rotkatalogen för projektet
+// Specify the path to the database file relative to the root directory of the project
 const dbPath = path.join(process.cwd(), 'src', 'database', 'customers.db');
 
-// Skapa en instans av nedb-databasen
+// Create an instance of the nedb database
 const customersDB = nedb.create({ filename: dbPath, autoload: true });
 
-// Logga sökvägen till databasfilen
+// Log the path to the database file
 console.log("Database path:", dbPath);
 
-// Endpunkt för användarregistrering
+// Endpoint for user registration
 router.post("/register", register);
 
-// Endpunkt för användarlogin
+// Endpoint for user login
 router.post("/login", login);
 
-// GET-endpunkt för att hämta alla kunder
+// GET endpoint to fetch all customers
 router.get("/", async (req, res) => {
   try {
-      // Här hämtas alla kunder från databasen
+      // Fetch all customers from the database
       const customers = await customersDB.find({});
-      // Skicka tillbaka alla kunder som svar
+      // Send back all customers as a response
       res.json(customers);
   } catch (error) {
-      // Hantera fel om kunderna inte kan hämtas
+      // Handle errors if customers cannot be fetched
       console.error("Error fetching customers:", error);
       res.status(500).json({ error: "Failed to fetch customers" });
   }
 });
-
 
 export default router;

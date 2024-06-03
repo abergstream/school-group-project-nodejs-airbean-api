@@ -1,32 +1,30 @@
-
 import crypto from 'crypto';
-import database from '../database/database.js'; // Byt ut 'din-database-fil.js' mot den fil där du har skapat databasinstanser
+import database from '../database/database.js'; 
 
-// Hashfunktion för lösenord
+// Hash function for password
 const hashPassword = (password) => {
   return crypto.createHash('sha256').update(password).digest('hex');
 };
 
-// Registrera en ny användare
+// Register a new user
 export const register = async (req, res) => {
     const { username, email, password, phone } = req.body;
     try {
-        // Lägg till användaren i databasen
+        // Add the user to the database
         const newUser = await database.customers.insert({ username, email, password: hashPassword(password), phone });
-        console.log("New user registered:", newUser); // Logga den nya användaren
+        console.log("New user registered:", newUser); // Log the new user
         res.status(201).json({ message: "User registered successfully", user: newUser });
     } catch (error) {
-        console.error("Error registering user:", error); // Logga eventuella fel
+        console.error("Error registering user:", error); // Log any errors
         res.status(500).json({ error: "Failed to register user" });
     }
 };
 
-
-// Logga in en användare
+// Log in a user
 export const login = async (req, res) => {
     const { email, password } = req.body;
     try {
-        // Hämta användaren från databasen baserat på e-postadressen
+        // Retrieve the user from the database based on email address
         const user = await database.customers.findOne({ email });
         if (!user) {
             console.log("User not found for email:", email);
@@ -45,9 +43,8 @@ export const login = async (req, res) => {
     }
 };
 
-
-// Middleware för autentisering (om det behövs)
+// Middleware for authentication (if needed)
 export const auth = (req, res, next) => {
-  // Implementera autentiseringslogik här om det behövs
+  // Implement authentication logic here if needed
   next();
 };
