@@ -1,5 +1,4 @@
 import express from "express";
-import db from "./src/database/database.js";
 import cartRouter from "./src/routes/cart.js";
 import menuRouter from "./src/routes/info.js";
 import customerRouter from "./src/routes/customer.js";
@@ -10,7 +9,6 @@ import loginRouter from "./src/middleware/auth.js";
 import confirmationRouter from "./src/routes/confirmation.js";
 
 const PORT = 8000;
-// const API_KEY = process.env.API_KEY;
 
 const app = express();
 global.currentUser = '';
