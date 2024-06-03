@@ -65,10 +65,4 @@ const login = async (req, res) => {
   }
 };
 
-// Middleware for authentication (if needed)
-const auth = (req, res, next) => {
-  // Implement authentication logic here if needed
-  next();
-};
-
 export { register, login };

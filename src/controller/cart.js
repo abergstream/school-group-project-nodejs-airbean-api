@@ -107,6 +107,7 @@ const placeOrder = async (req, res, next) => {
   const orderTime = formatDate(new Date());
 
   let orderCustomerID = customerID;
+  let price = 0
 
   try {
     if (cartID) {
@@ -153,10 +154,15 @@ const placeOrder = async (req, res, next) => {
           new Date(Date.now() + 20 * 60 * 1000)
         );
 
+        cart.product.forEach((product) => {
+          price = price + product.quantity * product.price;
+        });
+
         const newOrder = {
           customerID: orderCustomerID,
           cartID: cartID,
           cartProducts: allCartProducts,
+          price: price,
           date: orderTime,
           estimatedDelivery: estimatedDelivery,
         };
@@ -174,7 +180,6 @@ const placeOrder = async (req, res, next) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-
   next();
 };
 
@@ -241,7 +246,6 @@ const deleteItemInOrder = async (cartID, productID) => {
     const updateProducts = cartItem.product.filter(p => p._id !== productID)
 
     console.log("updateProducts", updateProducts)
-
 
     const numUpdated = await db["cart"].update(
       { _id: cartID },
