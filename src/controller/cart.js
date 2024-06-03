@@ -89,4 +89,66 @@ function showCart() {
   // Visa kundkorg
 }
 
-export { addToCart };
+//Delete full order
+//Insomnina URL: localhost:8000/cart
+//BODY: 
+/* {
+	"_id":"1STi9KugGouyFUr5"          Välj rätt id från cart
+} */
+
+const deleteOrder = async (cartID) => {
+
+  try{
+    console.log("searching for item with cartID:", cartID)
+    const cartItem = await db["cart"].findOne({_id: cartID})
+    console.log("THE CART ITEM" ,cartItem)
+    if(!cartItem) {
+      throw new Error ('Item not found')
+    }
+
+    const deleteCart = await db["cart"].remove({ _id: cartID }, {})
+    console.log("Item removed", deleteCart)
+
+    return deleteCart
+  }catch(error){
+    console.error('Error removing item from cart', error)
+    throw error
+  }
+
+}
+
+//Delete specific item in order
+//Insomnina URL: localhost:8000/cart/item
+//BODY: 
+/* {
+	"cartID": "5J0W9gjuFH9oWvCZ",          Välj rätt id från cart
+  "productID" : "lN2tmDgmhBl1Mc6k"       Välj rätt id från cart
+} */
+
+const deleteItemInOrder = async (cartID, productID) => {
+  try{
+
+    const cartItem = await db["cart"].findOne({_id: cartID})
+
+    
+    if(!cartItem) {
+      throw new Error ('Item not found')
+    }
+    
+    const updateProducts = cartItem.product.filter(p => p._id !== productID)
+    console.log("updateProducts", updateProducts)
+    
+    const numUpdated = await db["cart"].update(
+      {_id: cartID},
+      {$set: {product: updateProducts}},
+      {}
+    )
+
+    return numUpdated
+
+  }catch(error){
+    console.error("Error removing specific item from cart", error)
+  }
+}
+
+export { addToCart, deleteOrder, deleteItemInOrder };

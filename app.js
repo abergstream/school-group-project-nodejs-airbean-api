@@ -1,4 +1,4 @@
-const PORT = process.env.PORT;
+const PORT = 8000;
 // const API_KEY = process.env.API_KEY;
 import express from "express";
 import db from "./src/database/database.js";
