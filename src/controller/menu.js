@@ -1,4 +1,4 @@
-import db from '../database/database.js'; 
+import db from '../database/database.js';
 
 // Function for menu
 const getAllProducts = async (req, res) => {
@@ -10,8 +10,4 @@ const getAllProducts = async (req, res) => {
   }
 };
 
-  export { getAllProducts };
-  
-
-  
-  
+export { getAllProducts };

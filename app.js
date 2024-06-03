@@ -1,4 +1,3 @@
-
 import express from "express";
 import db from "./src/database/database.js";
 import cartRouter from "./src/routes/cart.js";
@@ -6,17 +5,15 @@ import menuRouter from "./src/routes/info.js";
 import customerRouter from "./src/routes/customer.js";
 import loggerMiddleware from "./src/middleware/logger.js";
 import errorHandlerMiddleware from "./src/middleware/errorHandler.js";
-
-const PORT = process.env.PORT;
-// const API_KEY = process.env.API_KEY;
-
 import ordersRouter from "./src/routes/orders.js";
 import confirmationRouter from "./src/routes/confirmation.js";
+
+const PORT = process.env.PORT || 3000;
+// const API_KEY = process.env.API_KEY;
 
 const app = express();
 
 app.use(express.json());
-
 app.use(loggerMiddleware)
 
 app.use("/cart", cartRouter);
