@@ -57,6 +57,7 @@ const login = async (req, res) => {
       return res.status(400).json({ error: "Invalid email or password" });
     }
     console.log("User logged in successfully:", user.email);
+    global.currentUser = user.username;
     res.status(200).json({ message: "Login successful", user });
   } catch (error) {
     console.error("Error logging in user:", error);
