@@ -185,6 +185,7 @@
                 "quantity": 4
             }
         ],
+        "price": 480,
         "date": "2024-06-03 15:07:17",
         "estimatedDelivery": "2024-06-03 15:27:17",
         "_id": "si1ip4tQsAh8K3OL"
