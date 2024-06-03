@@ -11,12 +11,10 @@ import checkProductExists from "../middleware/checkProductExists.js";
 const router = Router();
 
 // router.get("/cart", showCart);
-
 router.get("/:id", showCart);
 
 router.post("/", checkProductExists, (req, res, next) => {
   addToCart(req, res, next);
-  // res.send("Den finns");
 });
 
 // Place order
