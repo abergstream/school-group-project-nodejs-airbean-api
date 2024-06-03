@@ -4,6 +4,7 @@ import database from '../database/database.js';
 // Hash function for password
 const hashPassword = (password) => {
     return crypto.createHash('sha256').update(password).digest('hex');
+
 };
 
 // Register a new user
@@ -32,6 +33,7 @@ const register = async (req, res) => {
         console.error("Error registering user:", error); // Log any errors
         res.status(500).json({ error: "Failed to register user" });
     }
+
 };
 
 // Log in a user
@@ -54,7 +56,15 @@ const login = async (req, res) => {
     } catch (error) {
         console.error("Error logging in user:", error);
         res.status(500).json({ error: "Failed to login user" });
+
     }
+    console.log("User logged in successfully:", user.email);
+    global.currentUser = { email };
+    res.status(200).json({ message: "Login successful", user });
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    res.status(500).json({ error: "Failed to login user" });
+  }
 };
 
 // Middleware for authentication (if needed)
@@ -64,3 +74,4 @@ const auth = (req, res, next) => {
 };
 
 export { register, login }
+

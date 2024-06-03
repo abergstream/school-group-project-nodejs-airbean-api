@@ -1,6 +1,8 @@
 const errorHandler = (err, req, res, next) => {
-  res.status(err.status || 500).json({ message: err.message })
+  res.status(404).json({
+    message: err.message,
+  });
   next()
-}
+};
 
-export default errorHandler
+export default errorHandler;

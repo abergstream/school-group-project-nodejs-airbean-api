@@ -1,37 +1,33 @@
-
 import express from "express";
-import db from "./src/database/database.js";
 import cartRouter from "./src/routes/cart.js";
-import menuRouter from "./src/routes/info.js";
 import customerRouter from "./src/routes/customer.js";
+import ordersRouter from "./src/routes/orders.js";
+import companyRouter from "./src/routes/info.js"
+import loginRouter from "./src/middleware/auth.js";
+import confirmationRouter from "./src/routes/confirmation.js";
 import loggerMiddleware from "./src/middleware/logger.js";
 import errorHandlerMiddleware from "./src/middleware/errorHandler.js";
+import notFoundMiddleware from "./src/middleware/notFound.js";
 
-const PORT = process.env.PORT;
-// const API_KEY = process.env.API_KEY;
-
-import ordersRouter from "./src/routes/orders.js";
-import confirmationRouter from "./src/routes/confirmation.js";
+const PORT = 8000;
 
 const app = express();
+global.currentUser = '';
 
 app.use(express.json());
-
-app.use(loggerMiddleware)
+app.use(loggerMiddleware);
 
 app.use("/cart", cartRouter);
-app.use("/info", menuRouter);
+app.use("/info", companyRouter);
 app.use("/customer", customerRouter);
 app.use("/orders", ordersRouter);
+app.use("/company", companyRouter);
+
 app.use("/confirmation", confirmationRouter);
+app.use("/auth", loginRouter);
 
-app.get('/error', (req, res, next) => {
-  const error = new Error('Page not found');
-  error.status = 404;
-  next(error);
-});
-
-app.use(errorHandlerMiddleware)
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 // db['cart'].find();
 // db['menu'].find();

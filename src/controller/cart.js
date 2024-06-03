@@ -39,7 +39,8 @@ const addToCart = async (req, res, next) => {
           },
           { returnUpdatedDocs: true } // This option will return the updated document
         );
-        return res.status(200).json(updateResult);
+        const productInfo = { ...coffeeQuery };
+        return res.status(200).json({ product: "Added", productInfo });
       } catch {
         return res.status(500).send({ message: "Could not update database" });
       }
@@ -54,7 +55,8 @@ const addToCart = async (req, res, next) => {
           { returnUpdatedDocs: true } // This option will return the updated document
         );
 
-        return res.status(200).json(result);
+        const productInfo = { ...coffeeQuery };
+        return res.status(200).json({ product: "Added", productInfo });
       } catch {
         return res.status(500).json({ message: "Error updating document" });
       }
@@ -75,11 +77,23 @@ const addToCart = async (req, res, next) => {
     }
   }
 };
+
 // Show cart
 const showCart = async (req, res) => {
+  const cartID = req.params.id;
   try {
-    const allCartProducts = await db.cart.find({});
-    res.send(allCartProducts);
+    const cart = await db.cart.findOne({ _id: cartID });
+    let price = 0;
+    if (!cart) {
+      return res
+        .status(404)
+        .json({ message: `Cart: ${cartID} could not be found` });
+    }
+    cart.product.forEach((product) => {
+      price = price + product.quantity * product.price;
+    });
+    const response = { ...cart, price };
+    res.send(response);
   } catch (error) {
     res
       .status(500)
@@ -87,58 +101,76 @@ const showCart = async (req, res) => {
   }
 };
 
+// Place order
 const placeOrder = async (req, res, next) => {
-  // Vet inte om jag behöver cartID
   const { customerID, cartID, guestInfo } = req.body;
   const orderTime = formatDate(new Date());
 
   let orderCustomerID = customerID;
 
   try {
-    if (!orderCustomerID && guestInfo) {
-      const { email, phone } = guestInfo;
-      if (!email || !phone) {
-        return res
-          .status(400)
-          .json({ message: "Guest email and phone are required" });
+    if (cartID) {
+      const cart = await db["cart"].findOne({ _id: cartID });
+
+      if (cart) {
+        const allCartProducts = cart.product;
+
+        if (!orderCustomerID && guestInfo) {
+          const { email, phone } = guestInfo;
+          if (!email || !phone) {
+            return res
+              .status(400)
+              .json({ message: "Guest email and phone are required" });
+          }
+
+          // Create a guest entry if not logged in
+          const guestCustomer = await db["customers"].insert({
+            username: "guest",
+            email: guestInfo.email,
+            phone: guestInfo.phone,
+          });
+          orderCustomerID = guestCustomer._id;
+        }
+
+        if (orderCustomerID && !guestInfo) {
+          const customer = await db["customers"].findOne({
+            _id: orderCustomerID,
+          });
+          if (!customer) {
+            return res.status(400).json({ message: "Customer not found" });
+          }
+        }
+
+        // Check if customerID or guestInfo is provided
+        if (!orderCustomerID) {
+          return res
+            .status(400)
+            .json({ message: "customerID or valid GuestInfo is required" });
+        }
+
+        // Calculate estimated delivery time
+        const estimatedDelivery = formatDate(
+          new Date(Date.now() + 20 * 60 * 1000)
+        );
+
+        const newOrder = {
+          customerID: orderCustomerID,
+          cartID: cartID,
+          cartProducts: allCartProducts,
+          date: orderTime,
+          estimatedDelivery: estimatedDelivery,
+        };
+
+        const savedOrder = await db["orders"].insert(newOrder);
+        deleteOrder(cartID);
+
+        res.json({ message: "Order placed successfully", order: savedOrder });
+      } else {
+        res.status(400).json({ message: "CartID is invalid" });
       }
-
-      // Create a guest entry if not logged in
-      const guestCustomer = await db["customers"].insert({
-        username: "guest",
-        email: guestInfo.email,
-        phone: guestInfo.phone,
-      });
-      orderCustomerID = guestCustomer._id;
+    } else {
+      res.status(400).json({ message: "CartID is required" });
     }
-
-    if (orderCustomerID && !guestInfo) {
-      const customer = await db["customers"].findOne({ _id: orderCustomerID });
-      if (!customer) {
-        return res.status(400).json({ message: "Customer not found" });
-      }
-    }
-
-    // Check if customerID or guestInfo is provided
-    if (!orderCustomerID) {
-      return res
-        .status(400)
-        .json({ message: "customerID or valid GuestInfo is required" });
-    }
-
-    // Calculate estimated delivery time
-    const estimatedDelivery = formatDate(new Date(Date.now() + 20 * 60 * 1000));
-
-    const newOrder = {
-      customerID: orderCustomerID,
-      cartID: cartID,
-      date: orderTime,
-      estimatedDelivery: estimatedDelivery,
-    };
-
-    const savedOrder = await db["orders"].insert(newOrder);
-
-    res.json({ message: "Order placed successfully", order: savedOrder });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -146,6 +178,7 @@ const placeOrder = async (req, res, next) => {
   next();
 };
 
+// Format date
 const formatDate = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -161,7 +194,7 @@ const formatDate = (date) => {
 //Insomnina URL: localhost:8000/cart
 //BODY:
 /* {
-	"_id":"1STi9KugGouyFUr5"          Välj rätt id från cart
+  "_id":"1STi9KugGouyFUr5"          Välj rätt id från cart
 } */
 
 const deleteOrder = async (cartID) => {
@@ -187,7 +220,7 @@ const deleteOrder = async (cartID) => {
 //Insomnina URL: localhost:8000/cart/item
 //BODY:
 /* {
-	"cartID": "5J0W9gjuFH9oWvCZ",          Välj rätt id från cart
+  "cartID": "5J0W9gjuFH9oWvCZ",          Välj rätt id från cart
   "productID" : "lN2tmDgmhBl1Mc6k"       Välj rätt id från cart
 } */
 
@@ -196,11 +229,19 @@ const deleteItemInOrder = async (cartID, productID) => {
     const cartItem = await db["cart"].findOne({ _id: cartID });
 
     if (!cartItem) {
-      throw new Error("Item not found");
+      throw new Error('Cart not found')
     }
 
-    const updateProducts = cartItem.product.filter((p) => p._id !== productID);
-    console.log("updateProducts", updateProducts);
+    const productExists = cartItem.product.some(p => p._id === productID)
+
+    if (!productExists) {
+      throw new Error("Product not found in cart")
+    }
+
+    const updateProducts = cartItem.product.filter(p => p._id !== productID)
+
+    console.log("updateProducts", updateProducts)
+
 
     const numUpdated = await db["cart"].update(
       { _id: cartID },
@@ -208,9 +249,9 @@ const deleteItemInOrder = async (cartID, productID) => {
       {}
     );
 
-    return numUpdated;
   } catch (error) {
-    console.error("Error removing specific item from cart", error);
+    console.error("Error removing specific item from cart", error)
+    throw error
   }
 };
 
