@@ -8,7 +8,7 @@ import errorHandlerMiddleware from "./src/middleware/errorHandler.js";
 import ordersRouter from "./src/routes/orders.js";
 import confirmationRouter from "./src/routes/confirmation.js";
 
-const PORT = process.env.PORT || 8000;
+const PORT = 8000;
 // const API_KEY = process.env.API_KEY;
 
 const app = express();
