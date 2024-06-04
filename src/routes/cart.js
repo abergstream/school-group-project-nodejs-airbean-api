@@ -18,9 +18,7 @@ router.post("/", checkProductExists, (req, res, next) => {
 });
 
 // Place order
-router.post("/order", (req, res, next) => {
-  placeOrder(req, res, next);
-});
+router.post("/order", placeOrder);
 
 //Delete order
 router.delete("/", async (req, res) => {

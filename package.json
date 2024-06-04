@@ -17,9 +17,6 @@
   "dependencies": {
     "crypto": "^1.0.1",
     "express": "^4.19.2",
-    "joi": "^17.13.1",
-    "nedb": "^1.8.0",
-    "nedb-promises": "^6.2.3",
-    "uuid": "^9.0.1"
+    "nedb-promises": "^6.2.3"
   }
 }

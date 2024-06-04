@@ -1,5 +1,5 @@
-import crypto from "crypto";
 import database from "../database/database.js";
+import crypto from "crypto";
 
 // Hash function for password
 const hashPassword = (password) => {

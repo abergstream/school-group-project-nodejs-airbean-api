@@ -4,8 +4,8 @@ import customerRouter from "./src/routes/customer.js";
 import ordersRouter from "./src/routes/orders.js";
 import companyRouter from "./src/routes/info.js"
 import loggerMiddleware from "./src/middleware/logger.js";
-import errorHandlerMiddleware from "./src/middleware/errorHandler.js";
 import notFoundMiddleware from "./src/middleware/notFound.js";
+import errorHandlerMiddleware from "./src/middleware/errorHandler.js";
 
 const PORT = 8000;
 
@@ -23,12 +23,6 @@ app.use("/company", companyRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
-
-// db['cart'].find();
-// db['menu'].find();
-// db['orders'].find();
-// db['users'].find();
-// db['company'].find();
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

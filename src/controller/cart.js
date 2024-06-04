@@ -195,13 +195,6 @@ const formatDate = (date) => {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
-//Delete full order
-//Insomnina URL: localhost:8000/cart
-//BODY:
-/* {
-  "_id":"1STi9KugGouyFUr5"          Välj rätt id från cart
-} */
-
 const deleteOrder = async (cartID) => {
   try {
     console.log("searching for item with cartID:", cartID);
@@ -220,14 +213,6 @@ const deleteOrder = async (cartID) => {
     throw error;
   }
 };
-
-//Delete specific item in order
-//Insomnina URL: localhost:8000/cart/item
-//BODY:
-/* {
-  "cartID": "5J0W9gjuFH9oWvCZ",          Välj rätt id från cart
-  "productID" : "lN2tmDgmhBl1Mc6k"       Välj rätt id från cart
-} */
 
 const deleteItemInOrder = async (cartID, productID) => {
   try {

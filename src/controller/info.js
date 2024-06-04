@@ -11,4 +11,4 @@ const getCompanyInfo = async () => {
     }
 }
 
-export default getCompanyInfo
+export { getCompanyInfo }

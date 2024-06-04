@@ -1,7 +1,5 @@
 import db from '../database/database.js';
 
-
-
 //Search for all orders in orders database made by customer with selected customerId.
 //User story:  Som en inloggad användare vill jag kunna se min orderhistorik för att jag ska kunna få en överblick över när och vad jag beställt samt för hur mycket.
 

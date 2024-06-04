@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { getOrdersByCustomerId } from "../controller/order.js";
-import { getOrderByOrderId } from "../controller/order.js";
+import { getOrdersByCustomerId, getOrderByOrderId } from "../controller/order.js";
 import authenticate from "../middleware/auth.js";
 
 const router = Router();
@@ -19,11 +18,10 @@ router.get("/:id", authenticate, async (req, res) => {
   }
 });
 
-
 //Sök order genom att ange order-id:
 router.get("/confirmation/:id", async (req, res) => {
   try {
-    const orderId = req.params.id; 
+    const orderId = req.params.id;
     const order = await getOrderByOrderId(orderId);
     if (order) {
       //Beräkna tid för leverans (20 min)
@@ -46,6 +44,5 @@ router.get("/confirmation/:id", async (req, res) => {
       .json({ message: "Error fetching order", error: error.message });
   }
 });
-
 
 export default router;

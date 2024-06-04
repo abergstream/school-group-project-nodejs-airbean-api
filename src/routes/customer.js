@@ -8,7 +8,6 @@ const router = express.Router();
 router.post("/register", register);
 
 // Endpoint for user login
-
 router.post("/login", login);
 
 // GET endpoint to fetch all customers
