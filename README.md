@@ -142,11 +142,11 @@
 
 ```
 {
-  customerID: null,
-  cartID: "Acwd7ENmZXDGozIg",
-  guestInfo: {
-    email: "guest@example.com",
-    phone: "1234567890"
+  "customerID": null,
+  "cartID": "Acwd7ENmZXDGozIg",
+  "guestInfo": {
+    "email": "guest@example.com",
+    "phone": "1234567890"
   }
 }
 ```
@@ -155,9 +155,9 @@
 
 ```
 {
-  customerID: "DzbWOAIZTDQUyoQB",
-  cartID: "Acwd7ENmZXDGozIg",
-  guestInfo: null
+  "customerID": "DzbWOAIZTDQUyoQB",
+  "cartID": "Acwd7ENmZXDGozIg",
+  "guestInfo": "null"
 }
 ```
 
@@ -261,7 +261,7 @@ Routes?
 }
 ```
 
-#### GET - /orders/:id
+#### GET - /orders/:id   
 
 ##### Response
 
@@ -298,7 +298,7 @@ Routes?
 
 ## 10.
 
-#### GET - /confirmation/:id
+#### GET - /orders/confirmation/:id    (order-id)
 
 ##### Response
 
