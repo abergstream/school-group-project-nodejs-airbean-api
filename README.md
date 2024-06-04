@@ -142,11 +142,11 @@
 
 ```
 {
-  customerID: null,
-  cartID: "Acwd7ENmZXDGozIg",
-  guestInfo: {
-    email: "guest@example.com",
-    phone: "1234567890"
+  "customerID": null,
+  "cartID": "Acwd7ENmZXDGozIg",
+  "guestInfo": {
+    "email": "guest@example.com",
+    "phone": "1234567890"
   }
 }
 ```
