@@ -23,7 +23,7 @@ router.get("/:id", authenticate, async (req, res) => {
 //Sök order genom att ange order-id:
 router.get("/confirmation/:id", async (req, res) => {
   try {
-    const orderId = req.params.id; // Säkerställ att orderId är ett nummer och 10 anger att strängen ska tolkas som ett decimaltal (bas 10)
+    const orderId = req.params.id; 
     const order = await getOrderByOrderId(orderId);
     if (order) {
       //Beräkna tid för leverans (20 min)
