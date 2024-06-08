@@ -14,8 +14,9 @@ const getAllProducts = async (req, res) => {
 async function createMenuItem(item){
   try{
     const newMenuItem = await db.menu.insert(item);
+    return newMenuItem; 
     console.log(newMenuItem);
-  } catch (error){
+    } catch (error){
     console.error (error , 'Failed to add new menu item');
   }
   };
@@ -44,6 +45,10 @@ async function createMenuItem(item){
   }
 };
 
+function deleteMenuItem(title){
+  db.menu.remove({title:title});
+}
 
 
-export { getAllProducts, createMenuItem, findMenuItemByTitle, updateMenuItem  };
+
+export { getAllProducts, createMenuItem, findMenuItemByTitle, updateMenuItem, deleteMenuItem  };
