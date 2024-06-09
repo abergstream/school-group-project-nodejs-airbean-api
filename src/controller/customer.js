@@ -1,10 +1,11 @@
-import database from "../database/database.js";
-//import crypto from "crypto";
+//This file includes functions that updates customer database with:
+// register new user
+// user login
+// user logout
+// delete user account from database
 
-// Hash function for password
-/*const hashPassword = (password) => {
-  return crypto.createHash("sha256").update(password).digest("hex");
-};*/
+import database from "../database/database.js";
+
 
 // Register a new user
 const register = async (req, res) => {
@@ -38,32 +39,26 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { username, email, password } = req.body;
   try {
-    // Retrieve the user from the database based on either email or username
     const user = await database.customers.findOne({ $or: [{ email: email }, { username: username }] });
     if (!user) {
-      console.log("User not found for email or username:",  email || username);
+      console.log("User not found for email or username:", email || username);
       return res.status(400).json({ error: "Invalid email or password" });
     }
 
       // Compare the provided password with the stored password
       if (password !== user.password) {
         console.log("Invalid password for user:", email || username);
-        return res.status(400).json({ error: "Invalid email or username or password" });
+        return res.status(400).json({ error: "Invalid email or password" });
       }
 
-    /*const hashedPassword = hashPassword(password);
-    if (hashedPassword !== user.password) {
-      console.log("Invalid password for user:", email);
-      return res.status(400).json({ error: "Invalid email or password" });
-    }*/
-    console.log("User logged in successfully:", user.email);
-    global.currentUser = user.username;
-    res.status(200).json({ message: "Login successful", user });
-  } catch (error) {
-    console.error("Error logging in user:", error);
-    res.status(500).json({ error: "Failed to login user" });
-  }
-};
+      global.currentUser = user;  // Set the entire user object
+      console.log("User logged in successfully:", user);
+      res.status(200).json({ message: "Login successful", user });
+    } catch (error) {
+      console.error("Error logging in user:", error);
+      res.status(500).json({ error: "Failed to login user" });
+    }
+  };
 
 const logout = async (req, res) => {
   global.currentUser = null;

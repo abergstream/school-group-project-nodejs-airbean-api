@@ -1,3 +1,2 @@
-{"username":"admin","password":"password","email":"adm@ba.se","phone":"012","role":"admin","_id":"1tGyd9vve7pNaHuf"}
-{"username":"sol","password":"password","email":"sol@be.se","phone":"0123456789","_id":"vxoGdnvG3zHw9zDR"}
-{"$$deleted":true,"_id":"vxoGdnvG3zHw9zDR"}
+{"username":"Ada_Admin","password":"password","email":"ada@be.se","phone":"012","role":"admin","_id":"ABjpd99zbw6Ve9kw"}
+{"username":"sol","password":"password","email":"sol@be.se","phone":"0123456789","_id":"FqNGfFzk1n2oLK2g"}
