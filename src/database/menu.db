@@ -9,4 +9,5 @@
 {"title":"Bryggarekaffe","desc":"En stor varm kopp med husets bryggmalet.","price":27,"createdAt":"2024-06-08T17:48:42.001Z","_id":"iK6866lHhxuQgH6A","modifiedAt":"2024-06-09T11:13:02.199Z"}
 {"title":"Cold Brew","desc":"Kallbryggt kaffe för en uppfriskande smakupplevelse.","price":42,"_id":"lN2tmDgmhBl1Mc6k"}
 {"title":"Cappuccino","desc":"En krämig cappuccino med skummad mjölk.","price":45,"_id":"nG7UZ7wTTM0wm64Q"}
+{"title":"Gustav Adolf Bakelse","desc":"Göteborgarens nationalbakelse, med Gustav Adolf i choklad.","price":45,"createdAt":"2024-06-09T15:51:44.791Z","_id":"qsslnrD4wcXAEV7c"}
 {"title":"Bryggarekaffe","desc":"En kopp med husets bryggmalet.","price":25,"createdAt":"2024-06-08T17:59:45.402Z","_id":"yfU4UjEmgEhMpuVH"}
