@@ -97,7 +97,7 @@ const showCart = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .send({ error: "Could not get find the cart... no coffee for you!" });
+      .send({ error: "Could not find the cart... no coffee for you!" });
   }
 };
 
@@ -198,13 +198,13 @@ const formatDate = (date) => {
 const deleteOrder = async (cartID) => {
   try {
     console.log("searching for item with cartID:", cartID);
-    const cartItem = await db["cart"].findOne({ _id: cartID });
+    const cartItem = await db.cart.findOne({ _id: cartID });
     console.log("THE CART ITEM", cartItem);
     if (!cartItem) {
       throw new Error("Item not found");
     }
 
-    const deleteCart = await db["cart"].remove({ _id: cartID }, {});
+    const deleteCart = await db.cart.remove({ _id: cartID }, {});
     console.log("Item removed", deleteCart);
 
     return deleteCart;

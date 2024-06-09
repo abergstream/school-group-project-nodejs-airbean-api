@@ -1,17 +1,16 @@
 import { Router } from "express";
-
 import { getAllProducts, createMenuItem , findMenuItemByTitle, updateMenuItem, deleteMenuItem} from "../controller/menu.js";
 import {menuItemSchema, updateMenuItemSchema} from "../models/menuSchema.js";
+import {checkAdmin} from "../middleware/auth.js";
 
 const router = Router();
 
-
 router.get('/', getAllProducts)
 
-
-
 //POST new menu item. Also adding a new parameter 'createdAt' to log the menu update.
-router.post('/', async(req,res)=> {
+//Check if inlogged user has admin-role, which give access to update menu
+
+router.post('/',checkAdmin, async(req,res)=> {
 //validate that the input menu item correspond to expected form.
 const { error, value } = menuItemSchema.validate(req.body);
 if (error) {
@@ -23,12 +22,12 @@ if (error) {
   ...value, createdAt
 };
 
-//include new menu item in response
+//Include new menu item in response. Response info from the request body.
 try {
-  const createdItem = await createMenuItem(newItem);
+  await createMenuItem(newItem);
   res.json({ 
     message: "Menu item added successfully", 
-    item: createdItem  // Include the created item in the response
+    item: newItem  // Use the newItem data from the request body
   });
 } catch (error) {
   res.status(500).json({ error: 'Failed to add new menu item', details: error.message });
@@ -36,7 +35,7 @@ try {
 });
 
 //Uppdate menu item. Add parameter 'modifiedAt'.
-router.put('/:title',async (req,res)=>{
+router.put('/:title',checkAdmin, async (req,res)=>{
 //Check if the entered menu-item exists in database.
   try {
     const menuItem = await findMenuItemByTitle(req.params.title);
@@ -56,23 +55,26 @@ router.put('/:title',async (req,res)=>{
   };
 
   await updateMenuItem(req.params.title, updatedItem);
-     res.json({message : "Menu updated successfully"});
+   // The response should bring all info regarding the menu updated. Therefore the info is retreived from the database.
+   const updatedMenuItem = await findMenuItemByTitle(req.params.title);
+
+     res.json({message : "Menu updated successfully", item:updatedMenuItem});
   }catch(error){
     res.status(500).json({ error: 'Failed to update menu item', details:error.message});
   };
 });
 
 //Delete a menu item
-router.delete('/:title', async(req,res)=>{
+router.delete('/:title', checkAdmin, async(req,res)=>{
   //Check if the entered menu-item exists in database.
   try {
     const menuItem = await findMenuItemByTitle(req.params.title);
     if (!menuItem) {
       return res.status(404).json({ error: 'Failed to find menu item. Is it correctly spelled?' });
     }
-
+//Response include the name of deleted item, retreived from the url-input.
     await deleteMenuItem(req.params.title);
-    res.json({ message: "Menu item deleted successfully" });
+    res.json({ message: "Menu item deleted successfully", item:req.params.title });
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete menu item', details: error.message });
   }
