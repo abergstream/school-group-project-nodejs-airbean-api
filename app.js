@@ -3,7 +3,8 @@ import cartRouter from "./src/routes/cart.js";
 import customerRouter from "./src/routes/customer.js";
 import ordersRouter from "./src/routes/orders.js";
 import menuRouter from "./src/routes/menu.js";
-import companyRouter from "./src/routes/info.js"
+import companyRouter from "./src/routes/info.js";
+import adminRouter from "./src/routes/admin.js";
 //import loggerMiddleware from "./src/middleware/logger.js";
 import loggerMiddleware from "./src/middleware/logger2.js"; 
 
@@ -25,6 +26,7 @@ app.use("/info", companyRouter);
 app.use("/menu", menuRouter);
 app.use("/customer", customerRouter);
 app.use("/orders", ordersRouter);
+app.use("/admin", adminRouter);
 
 
 app.use(notFoundMiddleware);
