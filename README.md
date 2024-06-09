@@ -66,16 +66,16 @@ eller om Nodemon finns installerat:
 
 Testa api-anrop genom Insomnia eller Postman.
 
-### 1. Som användare vill jag kunna skapa ett konto ###
+### 1.1 Som användare vill jag kunna skapa ett konto ###
 
 #### POST - /customer/register
 ##### Request
 ```
 {
-    "username": "andreas",
+    "username": "sol",
     "password": "password",
-    "email": "a@b.se",
-    "phone": "0731234567"
+    "email": "sol@be.se",
+    "phone": "0123456789"
 }
 ```
 ##### Response
@@ -83,35 +83,52 @@ Testa api-anrop genom Insomnia eller Postman.
 {
     "message": "User registered successfully",
     "user": {
-        "username": "andreas",
-        "email": "a@b.se",
-        "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+        "username": "sol",
+        "email": "sol@b.se",
+        "password": "password",
         "phone": "0731234567",
-        "_id": "COwTqeN5KqmJB5wB"
+        "_id": "FqNGfFzk1n2oLK2g"
     }
 }
 ```
 
-### 2. Som användare vill jag kunna logga in ###
+### 1.2. Som användare vill jag kunna logga in ###
 #### POST - /customer/login
 ##### Request
 ```
 {
-    "email": "a@b.se",
-    "password": "andreas"
+    "username": "sol",
+    "password": "password"
 }
 ```
 ##### Response
 ```
 {
-    "message": "User registered successfully",
+    "message": "Login successful",
     "user": {
-        "username": "andreas",
-        "email": "a@b.se",
-        "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-        "phone": "0731234567",
-        "_id": "COwTqeN5KqmJB5wB"
-    }
+        "username": "sol",
+        "password": "password",
+        "email": "sol@be.se",
+        "phone": "0123456789",
+        "_id": "FqNGfFzk1n2oLK2g"
+	}
+}
+```
+
+### 1.2.1 Som användare vill jag kunna logga ut ###
+#### POST - /customer/logout
+###### Response
+```
+{
+	"message": "Logout successful"
+}
+```
+### 1.2.2 Som användare vill jag kunna ta bort/deleta ett användarkonto. ###
+#### DELETE - /customer/delete/<id>
+###### Response
+```
+{
+	"message": "User removed from database"
 }
 ```
 
@@ -134,6 +151,7 @@ Testa api-anrop genom Insomnia eller Postman.
     },
     [...]
 ```
+
 
 ### 4. Som användare vill jag kunna lägga kaffesort från meny i en kundkorg ###
 #### POST - /cart
@@ -329,18 +347,40 @@ Logga in som i punkt 2.
 
 ## Test del 2 ##
 
-### 2.1. Som admin vill jag kunna lägga in ny produkt på menyn ###
-
-#### POST - /menu
-##### Request
+### 2.1. Som användare vill jag kunna logga in med rollen "admin" och få access till speciella operationer på sidan. ###
+#### POST - /customer/login  ####
+##### Request  ##### 
+```
+{
+  "username": "Ada Admin", 
+	"password": "password"
+}
+```
+##### Response  ##### 
+```
+{
+	"message": "Login successful",
+	"user": {
+		"username": "admin",
+		"password": "password",
+		"email": "adm@ba.se",
+		"phone": "012",
+		"role": "admin",
+		"_id": "1tGyd9vve7pNaHuf"
+	}
+}
+```
+### 2.2. Som admin vill jag kunna lägga in ny produkt på menyn ###
+#### POST - /menu  ####
+##### Request  ##### 
 ```
 {
 		"title": "Bryggarekaffe",
 		"desc": "En kopp med husets bryggmalet.",
 		"price": 25
 	}
-    ```
-##### Response
+```
+##### Response ##### 
 ```
 {
 	"message": "Menu item added successfully",
@@ -353,25 +393,24 @@ Logga in som i punkt 2.
 	}
 }
 ```
-### 2.2. Som admin vill jag kunna ändra innehållet för ny produkt på menyn ###
+### 2.3. Som admin vill jag kunna ändra innehållet för ny produkt på menyn ###
 
-#### POST - /menu/Bryggarekaffe
-##### Request
+#### POST - /menu/Bryggarekaffe ####
+##### Request #####
  ```
 {
 		"desc": "En kopp med husets bryggmalet.",
 		"price": 25
 	}
 ``` 
- ##### Response
+ ##### Response #####
 ``` 
 
 ``` 
 
-### 2.2. Som admin vill jag kunna ta bort en produkt från menyn ###
-
-#### DELETE - /menu/Bryggarekaffe
-##### Response
+### 2.4. Som admin vill jag kunna ta bort en produkt från menyn ###
+#### DELETE - /menu/Bryggarekaffe ####
+##### Response #####
 ```
 {
 	"message": "Menu item deleted successfully"
