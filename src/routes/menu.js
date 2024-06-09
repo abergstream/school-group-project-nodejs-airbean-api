@@ -11,6 +11,7 @@ router.get('/', getAllProducts)
 //Check if inlogged user has admin-role, which give access to update menu
 
 router.post('/',checkAdmin, async(req,res)=> {
+
 //validate that the input menu item correspond to expected form.
 const { error, value } = menuItemSchema.validate(req.body);
 if (error) {
