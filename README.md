@@ -400,12 +400,20 @@ Logga in som i punkt 2.
  ```
 {
 		"desc": "En kopp med husets bryggmalet.",
-		"price": 25
+		"price": 32
 	}
 ``` 
  ##### Response #####
 ``` 
-
+{
+	"message": "Menu item added successfully",
+	"item": {
+		"title": "Bryggarekaffe",
+		"desc": "En stor kopp med husets bryggmalet.",
+		"price": 32,
+		"createdAt": "2024-06-09T11:35:26.166Z"
+	}
+}
 ``` 
 
 ### 2.4. Som admin vill jag kunna ta bort en produkt från menyn ###
