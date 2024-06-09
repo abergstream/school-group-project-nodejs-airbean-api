@@ -1,3 +1,1 @@
-{"title":"Gustav Adolf","desc":"En kopp med husets bryggmalet.","price":25,"_id":"JyKTr9E1xz5d0iCz"}
-{"title":"Gustav Adolf","product_1":"kaffe","product_2":"kaka","price":20,"_id":"wfeQV79PB17nQw5x"}
-{"title":"Gustav Adolf","product_1":"Mocha","product_2":"Americano","price":20,"_id":"MdSsjnY2viPUHHzQ"}
+{"title":"Gustav Adolf","products":["Gustav Adolf Bakelse","Bryggkaffe"],"price":40,"_id":"QhA4zLJiNPGNyd2O"}

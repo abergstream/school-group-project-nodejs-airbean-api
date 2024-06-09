@@ -1,25 +1,30 @@
 import { Router } from "express";
-import {createOffering} from '../controller/offerings.js';
+import {createOffering, getAllOfferings, deleteOffering} from '../controller/offerings.js';
 import db from '../database/database.js';
+import {checkAdmin} from '../middleware/auth.js';
+
 
 const router = Router();
-
+router.use(checkAdmin);
 
 // Endpoint for adding a new offering
-router.post("/offering", async (req, res)=>{
+router.post('/offering', async (req, res) => {
   try {
-    const { product_1, product_2, title, price } = req.body;
+    const { title, price, ...products } = req.body;
+
+// Convert products object to an array of product titles
+    const productTitles = Object.values(products);
 
 // Fetch all products from the menu
-      const products = await db.menu.find({});
+      const menuProducts = await db.menu.find({});
 
-// Check if product_1 and product_2 exist in the menu
-    const product1Exists = products.some((product) => product.title === product_1);
-    const product2Exists = products.some((product) => product.title === product_2);
+// Check if all products in the offering exist in the menu
+    const productsExist = productTitles.every(product => menuProducts.some(menuProduct => menuProduct.title === product)
+  );
 
 // If both products exist, proceed with creating the offering
-if (product1Exists && product2Exists) {
-  await createOffering({ title, product_1, product_2, price });
+if (productsExist) {
+  await createOffering({ title, products:productTitles, price });
   res.json({ message: 'New offering added successfully' });
 } else {
   // If any of the products are missing, return an error response
@@ -29,6 +34,26 @@ if (product1Exists && product2Exists) {
 console.error(error);
 res.status(500).json({ error: 'Failed to add new offering' });
 }
+});
+
+
+// Endpoint to view offerings
+router.get('/offering', getAllOfferings) ;
+
+// Endpoint to delete offerings
+router.delete('/offering/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await deleteOffering(id);
+    if (result > 0) {
+      res.json({ message: 'Offering deleted successfully' });
+    } else {
+      res.status(404).json({ error: 'Offering not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to delete offering' });
+  }
 });
 
 export default router;
