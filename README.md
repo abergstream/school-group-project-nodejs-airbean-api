@@ -62,7 +62,7 @@ eller om Nodemon finns installerat:
 
 `npm run dev`
 
-## Test ##
+## Test del 1 ##
 
 Testa api-anrop genom Insomnia eller Postman.
 
@@ -116,7 +116,7 @@ Testa api-anrop genom Insomnia eller Postman.
 ```
 
 ### 3. Som användare vill jag se meny med alla kaffesorter som går att beställa ###
-#### GET - /info/menu
+#### GET - /menu
 ###### Response
 ```
 [
@@ -327,8 +327,56 @@ Logga in som i punkt 2.
 }
 ```
 
-  
-  
+## Test del 2 ##
+
+### 2.1. Som admin vill jag kunna lägga in ny produkt på menyn ###
+
+#### POST - /menu
+##### Request
+```
+{
+		"title": "Bryggarekaffe",
+		"desc": "En kopp med husets bryggmalet.",
+		"price": 25
+	}
+    ```
+##### Response
+```
+{
+	"message": "Menu item added successfully",
+	"item": {
+		"title": "Bryggarekaffe",
+		"desc": "En kopp med husets bryggmalet.",
+		"price": 25,
+		"createdAt": "2024-06-08T17:59:45.402Z",
+		"_id": "yfU4UjEmgEhMpuVH"
+	}
+}
+```
+### 2.2. Som admin vill jag kunna ändra innehållet för ny produkt på menyn ###
+
+#### POST - /menu/Bryggarekaffe
+##### Request
+ ```
+{
+		"desc": "En kopp med husets bryggmalet.",
+		"price": 25
+	}
+``` 
+ ##### Response
+``` 
+
+``` 
+
+### 2.2. Som admin vill jag kunna ta bort en produkt från menyn ###
+
+#### DELETE - /menu/Bryggarekaffe
+##### Response
+```
+{
+	"message": "Menu item deleted successfully"
+}
+```
   
   
   
