@@ -4,6 +4,9 @@ import {authenticate} from "../middleware/auth.js";
 
 const router = Router();
 
+
+
+
 //Sök order genom att ange order-id. Använd authenticate middleware för att kontrollera att användaren är inloggad.:
 router.get("/:id", authenticate, async (req, res) => {
   try {

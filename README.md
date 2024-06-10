@@ -158,70 +158,159 @@ Testa api-anrop genom Insomnia eller Postman.
 ###### Request
 ```
 {
-  "product": "6ymMjHWMpLGChmJ6", // Mandatory, productID. Checks menu.db if the product exist.
-  "cartID": "", // Optional, new cart if empty, existing cart if it exists.
-  "customerID": "", // Optional, guest if empty.
-  "quantity": 1 // Optional, gets 1 if empty.
+  "products": [
+    { "title": "Mocha", "quantity": 2 },
+    { "title": "Bryggkaffe", "quantity": 3 }
+   ]
 }
 ```
 ###### Response
 ```
 {
-    "customerID": "",
-    "product": [
-        {
-            "title": "Mocha",
-            "desc": "En söt mocha med choklad och espresso.",
-            "price": 55,
-            "_id": "6ymMjHWMpLGChmJ6",
-            "quantity": 1
-        }
-    ],
-    "_id": "yHYB6NvAuAXa3CW2",
-    "instructions": "cartID would've been saved to session/cookie to be included in the next call"
-}
+	"message": "Cart created",
+	"cart": {
+		"products": [
+			{
+				"title": "Espresso",
+				"price": 25,
+				"quantity": 2,
+				"totalPrice": 50
+			},
+			{
+				"title": "Bryggkaffe",
+				"price": 25,
+				"quantity": 3,
+				"totalPrice": 75
+			}
+		],
+		"totalSum": 125,
+		"_id": "VaOxjZgcAqHGDg0G"
+	}
 ```
+### 5. Som administratör vill jag se samtliga kundkorgar ###
+Admin role är inte kopplad till detta fn.
+#### GET - /cart/   ####
+###### Response ###### 
+ ```
+{
+	"carts": [
+		{
+			"products": [
+				{
+					"title": "Mocha",
+					"price": 55,
+					"quantity": 2,
+					"totalPrice": 110
+				},
+				{
+					"title": "Bryggkaffe",
+					"price": 25,
+					"quantity": 1,
+					"totalPrice": 25
+				}
+			],
+			"totalSum": 135,
+			"_id": "Pnx5OBONxfOKDsHC"
+		},
+        {
+			"products": [
+				{
+					"title": "Mocha",
+					"price": 55,
+					"quantity": 1,
+					"totalPrice": 55
+				}
+			],
+			"totalSum": 55,
+			"_id": "zn7lPVJJ7r0Fm0tO"
+		}
+ ```
 
+### 5. Som administratör vill jag  kunna deleta kundkorg ###
+Admin role är inte kopplad till detta fn.
+#### DELETE - /cart/id   ####
+###### Response ###### 
+ ```{
+	"message": "Cart removed."
+}
+ ```
 ### 5. Som användare vill jag se innehåll i kundkorg ###
-#### GET - /cart/:id
-###### Response
+Som id används cart-id. Återfås genom att först visa alla kundkorgar (US-1.6).
+#### GET - /cart/:id ####
+###### Response ###### 
 ```
 {
-    "customerID": "ehLEGwSC1FzobAHN",
-    "product": [
-        {
-            "title": "Macchiato",
-            "desc": "En macchiato med en skvätt mjölk.",
-            "price": 30,
-            "_id": "dy1JqGCeAYWaJqri",
-            "quantity": 10
-        },
-        {
-            "title": "Cappuccino",
-            "desc": "En krämig cappuccino med skummad mjölk.",
-            "price": 45,
-            "_id": "nG7UZ7wTTM0wm64Q",
-            "quantity": 4
-        }
-    ],
-    "_id": "Acwd7ENmZXDGozIg",
-    "price": 480
+	"cart": {
+		"products": [
+			{
+				"title": "Mocha",
+				"price": 55,
+				"quantity": 2,
+				"totalPrice": 110
+			},
+			{
+				"title": "Bryggkaffe",
+				"price": 25,
+				"quantity": 1,
+				"totalPrice": 25
+			}
+		],
+		"totalSum": 135,
+		"_id": "Pnx5OBONxfOKDsHC"
+	}
 }
 ```
 
-### 6. Som användare vill jag kunna ta bort vara ur kundkorgen ###
-#### DELETE - /cart/item
+### 6. Som användare vill jag kunna uppdatera kundkorg ###
+Uppdatering gäller lägga till vara, ta bort vara, eller ändra antal. Skickas som body-request.
+#### PUT - /cart/id
 ###### Request
 ```
-{
-  "cartID": "vVu2PrXxomKcrtQt",
-  "productID" : "SjwGh9EVaYWtIzs7"
-}
+		{
+			"products": [
+				{
+					"title": "Mocha",
+					"quantity": 2
+				},
+				{
+					"title": "Bryggkaffe",
+					"quantity": 3
+				},
+					{
+					"title": "Espresso",
+					"quantity": 1
+				}
+				]
+		}
 ```
 ##### Response
 ```
 {
-    "message": "Item deleted successfully"
+	"message": "Cart updated",
+	"cart": {
+		"cart": 1,
+		"products": [
+			{
+				"title": "Mocha",
+				"price": 55,
+				"quantity": 2,
+				"totalPrice": 110
+			},
+			{
+				"title": "Bryggkaffe",
+				"price": 25,
+				"quantity": 3,
+				"totalPrice": 75
+			},
+			{
+				"title": "Espresso",
+				"price": 25,
+				"quantity": 1,
+				"totalPrice": 25
+			}
+		],
+		"totalSum": 210
+	}
 }
 ```
 
