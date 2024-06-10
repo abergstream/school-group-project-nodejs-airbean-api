@@ -1,10 +1,13 @@
 import { Router } from "express";
-import { getOrdersByCustomerId, getOrderByOrderId } from "../controller/order.js";
-import authenticate from "../middleware/auth.js";
+import {  placeOrder, getOrdersByCustomerId, getOrderByCartId } from "../controller/order.js";
+import {authenticate} from "../middleware/auth.js";
 
 const router = Router();
 
-//Sök order genom att ange order-id. Använd authenticate middleware för att kontrollera att användaren är inloggad.:
+// Place order
+router.post("/", placeOrder);
+
+//Visa orderhistorik. Sök order genom att ange order-id. Använd authenticate middleware för att kontrollera att användaren är inloggad.:
 router.get("/:id", authenticate, async (req, res) => {
   try {
     const order = await getOrdersByCustomerId(req.params.id);
@@ -19,10 +22,10 @@ router.get("/:id", authenticate, async (req, res) => {
 });
 
 //Sök order genom att ange order-id:
-router.get("/confirmation/:id", async (req, res) => {
+router.get("/confirmation/:cartId", async (req, res) => {
   try {
-    const orderId = req.params.id;
-    const order = await getOrderByOrderId(orderId);
+    const cartId = req.params.cartId;
+    const order = await getOrderByCartId(cartId);
     if (order) {
       //Beräkna tid för leverans (20 min)
       const orderDate = new Date(order.date);
