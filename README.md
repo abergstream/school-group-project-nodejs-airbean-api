@@ -314,14 +314,13 @@ Uppdatering gäller lägga till vara, ta bort vara, eller ändra antal. Skickas 
 }
 ```
 
-### 7. Som användare vill jag kunna skapa en order med varorna i kundkorgen. Omanvändaren ej är inloggad krävs att användaren även bifogar mail-adress och telefonnummer. ###
-#### POST - /cart/order
+### 7. Som användare vill jag kunna skapa en order med varorna i kundkorgen. Om användaren ej är inloggad krävs att användaren även bifogar mail-adress och telefonnummer. ###
+#### POST - /orders
 ##### Request
 ###### Guest
 ```
 {
-  "customerID": null,
-  "cartID": "Acwd7ENmZXDGozIg",
+   "cartID": "TeHTFotxCFzconZo",
   "guestInfo": {
     "email": "guest@example.com",
     "phone": "1234567890"
@@ -333,37 +332,34 @@ Uppdatering gäller lägga till vara, ta bort vara, eller ändra antal. Skickas 
 {
   "customerID": "DzbWOAIZTDQUyoQB",
   "cartID": "Acwd7ENmZXDGozIg",
-  "guestInfo": "null"
 }
 ```
 ##### Response
 ```
 {
-    "message": "Order placed successfully",
-    "order": {
-        "customerID": "3CFuQELPvlVoLZfz",
-        "cartID": "Acwd7ENmZXDGozIg",
-        "cartProducts": [
-            {
-                "title": "Macchiato",
-                "desc": "En macchiato med en skvätt mjölk.",
-                "price": 30,
-                "_id": "dy1JqGCeAYWaJqri",
-                "quantity": 10
-            },
-            {
-                "title": "Cappuccino",
-                "desc": "En krämig cappuccino med skummad mjölk.",
-                "price": 45,
-                "_id": "nG7UZ7wTTM0wm64Q",
-                "quantity": 4
-            }
-        ],
-        "price": 480,
-        "date": "2024-06-03 15:07:17",
-        "estimatedDelivery": "2024-06-03 15:27:17",
-        "_id": "si1ip4tQsAh8K3OL"
-    }
+	"message": "Order placed successfully",
+	"order": {
+		"customerID": "y4aahnkxzrOUTiJ1",
+		"cartID": "TeHTFotxCFzconZo",
+		"cartProducts": [
+			{
+				"title": "Mocha",
+				"price": 55,
+				"quantity": 1,
+				"totalPrice": 55
+			},
+			{
+				"title": "Bryggkaffe",
+				"price": 25,
+				"quantity": 3,
+				"totalPrice": 75
+			}
+		],
+		"totalSum": 130,
+		"date": "2024-06-10T10:49:47.701Z",
+		"estimatedDelivery": "13:09",
+		"_id": "YgtFeq4OcWsHuXxl"
+	}
 }
 ```
 

@@ -1,3 +1,5 @@
+//  Schema for cart.  Product name and quantity. Several products can be added as an array. 
+
 import Joi from 'joi';
 
 const productSchema = Joi.object({

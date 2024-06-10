@@ -1,2 +1,1 @@
-{"products":[{"title":"Mocha","price":55,"quantity":2,"totalPrice":110},{"title":"Bryggkaffe","price":25,"quantity":3,"totalPrice":75},{"title":"Espresso","price":25,"quantity":1,"totalPrice":25}],"totalSum":210,"_id":"Pnx5OBONxfOKDsHC"}
-{"products":[{"title":"Mocha","price":55,"quantity":1,"totalPrice":55}],"totalSum":55,"_id":"zn7lPVJJ7r0Fm0tO"}
+{"products":[{"title":"Espresso","price":25,"quantity":2,"totalPrice":50},{"title":"Bryggkaffe","price":25,"quantity":3,"totalPrice":75}],"totalSum":125,"_id":"NSFuLBgR7TDyLLn1"}
