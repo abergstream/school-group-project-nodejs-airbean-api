@@ -1,5 +1,5 @@
 import express from "express";
-import cartRouter from "./src/routes/cart.js";
+import cartRouter from "./src/routes/cart2.js";
 import customerRouter from "./src/routes/customer.js";
 import ordersRouter from "./src/routes/orders.js";
 import menuRouter from "./src/routes/menu.js";
