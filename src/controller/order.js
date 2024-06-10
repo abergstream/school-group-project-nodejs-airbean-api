@@ -93,9 +93,9 @@ const getOrdersByCustomerId = async (customerId) => {
   }
 }
 
-const getOrderByOrderId = async (orderId) => {
+const getOrderByCartId = async (cartId) => {
   try {
-    const order = await db.orders.findOne({ _id: orderId });
+    const order = await db.orders.findOne({ cartID: cartId  });
     return order;
   } catch (error) {
     console.error("Error fetching order", error);
@@ -103,4 +103,4 @@ const getOrderByOrderId = async (orderId) => {
   }
 }
 
-export {placeOrder, getOrdersByCustomerId, getOrderByOrderId };
+export {placeOrder, getOrdersByCustomerId, getOrderByCartId };
